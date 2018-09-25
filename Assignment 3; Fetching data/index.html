@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- meta data to help browser interpret code -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+	<title>JSON text retrieval</title>
+
+	<!-- in doc css formatting -->
+	<style type="text/css">
+		html, pre {font-family: sans-serif;}
+
+		body {
+			width: 500px;
+			margin: 0 auto;
+		}
+
+		pre {
+			line-height: 1;
+			padding: 1rem;
+		}
+
+		label {width: 100px;}
+
+		select {
+			margin: 0 auto;
+			margin-top: 15px;
+		}
+
+  	</style>
+</head>	
+
+
+<body>
+
+	<!-- similar to what was shown in class, users have options from a dropdown menu  
+	and they can choose whichever poem to be displayed
+	-->
+    <form>
+      <label for="poem-choose">Choose a poem</label>
+      <select id="poem-choose" name="poem-choose">
+        <option>The Red Wheelbarrow</option>
+        <option>Fire and Ice</option>
+        <option>In a Station of the Metro</option>
+      </select>
+    </form>
+
+	<!-- tags for poem title -->
+    <h1><em></em></h1>
+
+    <!-- tag for author name -->
+	<h3></h3>
+
+	<!-- where the poem will be displayed -->
+    <pre></pre>
+
+    <script>
+    	//this element would help the functions below select the proper poem chosen by users
+        var poemChoose = document.querySelector('select');
+
+    	//select the proper DOM elements to later populate the page
+        var poemTitle = document.querySelector('em');
+        var poemAuthor = document.querySelector('h3');
+        var poemDisplay = document.querySelector('pre');
+
+        //a request is neccesary to get the file
+        var request = new XMLHttpRequest();
+        
+        //when the value changes, aka a poem is chosen, this would start
+        //the other functions to update the page with the chosen poem
+        poemChoose.onchange = function() {
+          var poem = poemChoose.value;
+          getRequest(poem);
+        };   
+
+        //modify poem title to match its respective url, aka file name, 
+        //then send request to get poem
+        function getRequest(poem) {
+        	//a regular replace() only remove the first instance of spaces in the title
+        	//so using split and join would clear up spaces much faster
+            poem = poem.split(' ').join('');
+            poem = poem.toLowerCase();
+            var url = poem + '.txt';
+
+            request.open('GET', url);
+            request.responseType = 'text';
+			request.send();
+        };
+		
+		//when the request is received and loaded...
+		request.onload = function(){
+			//store the incoming info in a local variable
+		  	var poemText = request.response;
+
+		  	//parse the json format into text
+		  	var curPoem = JSON.parse(poemText);
+
+		  	//these functions will populate the info available onto the page
+		  	populateHeader(curPoem);
+		  	clearOldPoem();
+		  	displayPoem(curPoem);
+		}
+
+		//pulling info from is parameter to display poem title and poet
+		function populateHeader(poemObj){
+  			poemTitle.textContent = poemObj['poemTitle'];
+  			poemAuthor.textContent = poemObj['author'];
+		}
+
+		//the html tag needs to be cleared when user chooses a new poem or else
+		//lines from old poems will remain as new poems get added on at the end
+		//i couldnt find a way to clear it automatically though it could be due
+		//to how i add on the lines in displayPoem()
+		function clearOldPoem(){
+			poemDisplay.innerHTML = "";
+		}
+
+		//write the lines of the poem
+		function displayPoem(poemObj){
+			//get the array of lines from the poem object
+			var lines = poemObj['lines'];
+
+			//i decided to add each line using a <p> because poetry utilizes 
+			//newlines every often and <p> an easy way to move the lines of
+			//a poem onto a new line
+			for (var i = 0; i < lines.length; i++){
+				//create a new <p> for every line in the poem
+				var para = document.createElement("p");
+
+				//add current line into the current <p>
+				para.textContent = lines[i];
+
+				//and then i would add these <p> tags onto the <pre> to display on the page
+				poemDisplay.appendChild(para);
+			}
+		}
+
+		//just have a poem up initially so the page isnt blank and unattractive at first glance
+        getRequest('The Red Wheelbarrow');
+        verseChoose.value = 'The Red Wheelbarrow';  
+
+    </script>
+</body>
+</html>
