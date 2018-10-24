@@ -1,9 +1,0 @@
-{
-	"poemTitle": "In a Station of the Metro",
-	"author": "Ezra Pound",
-	"authorYear": "1885 - 1972",
-	"lines": [
-		"The apparition of these faces in the crowd;",
-		"Petals on a wet, black bough."
-	]
-}
