@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>FoodDB</title>
+  </head>
+  <body>
+    <div class="container">
+      <% if(foodRec !== null){ %>
+        <h1><%= foodRec.meals[0].strMeal %></h1>
+        <!-- instead of building another food website, routing user to the actualy
+        site of the recipe is more convenient -->
+        <a href="<%= foodRec.meals[0].strSource %>" target="_blank">
+          <img src="<%= foodRec.meals[0].strMealThumb %>" style="height: 70vh">
+        </a>
+      <% } %>
+    </div>
+  </body>
+</html>
