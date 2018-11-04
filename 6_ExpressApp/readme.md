@@ -8,13 +8,13 @@ A simple Express app that interacts with a recipe database. The user first selec
 ```
 node -v
 ```
-4. If a version number is returned, navigate to the directory with the downloaded files. 
-5. Install the necessary packages:
+3. If a version number is returned, navigate to the directory with the downloaded files. 
+4. Install the necessary packages:
 ```
 > npm install
 ```
-6. Once NodeJS and the packages are installed properly, run the app by calling:
+5. Once NodeJS and the packages are installed properly, run the app by calling:
 ```
 > node app.js
 ```
-7. The port number will be displayed on the command prompt, navigate your web broswer to ```localhost:<port>``` to start the app.
+6. The port number will be displayed on the command prompt, navigate your web broswer to ```localhost:<port>``` to start the app.
