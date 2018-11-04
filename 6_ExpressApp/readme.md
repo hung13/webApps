@@ -17,4 +17,4 @@ node -v
 ```
 > node app.js
 ```
-7. The port number will be displayed on the command prompt, navigate your web broswer to '''localhost:<port>''' to start the app.
+7. The port number will be displayed on the command prompt, navigate your web broswer to ```localhost:<port>``` to start the app.
