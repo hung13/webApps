@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>FoodDB</title>
+  </head>
+  <body>
+    <% if (name){%>
+      <p>Hi <%= name %></p>
+    <% } %>
+
+    <div class="container">
+      <fieldset>
+        <form action="/" method="post">
+          <!-- sets the dropdown menu to select food categories -->
+          <% if(foodCat){ %>
+            <p>Please choose an option:</p>
+            <select name="category">
+              <% for(var i = 0; i < foodCat.meals.length; i++){ %>
+                <!-- a way to save the user's prev choice of food category. 
+                basically, while generating the categories for the dropdown menu, 
+                if [i] matches user's choice, add the select tag, which 
+                effectively pre-selects it on the dropdown menu-->
+                <% if(cat == foodCat.meals[i].strCategory){ %>
+                  <option value="<%=foodCat.meals[i].strCategory%>" selected>
+                    <%= foodCat.meals[i].strCategory %>
+                  </option>
+                <% } else {%>
+                  <option value="<%=foodCat.meals[i].strCategory%>">
+                    <%= foodCat.meals[i].strCategory %>
+                  </option>
+                <% };%>
+              <% } %>
+            </select>
+          <% }; %>
+          
+          <!-- if the recipe list is ready, generate it alongside the
+          category dropdown -->
+          <% if(foodLst){ %>
+            <select name="recipe">
+              <% for(var i = 0; i < foodLst.meals.length; i++){ %>
+                <option value="<%=foodLst.meals[i].idMeal%>">
+                  <%= foodLst.meals[i].strMeal %>
+                </option>
+              <% }; %>
+            </select>
+          <% }; %>
+
+          <input type="submit">         
+        </form>
+
+        <% if(error !== null){ %>
+          <p><%= error %></p>
+        <% } %>
+      </fieldset>
+
+      <% if (!name){%>
+        <p><a href="/create">Create Account</a></p>
+        <p><a href="/login">Login</a></p>
+      <% }%>
+
+    </div>
+  </body>
+</html>
