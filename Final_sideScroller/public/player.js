@@ -33,7 +33,9 @@ function Player() {
       this.pos.y = height;
     }
   }
-  
+
+  //color player1 a specific color, underlying idea to make players
+  //different colors as they join the game to differentiation  
   this.show = function(color){
     this.update();
     this.edges();
